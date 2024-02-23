@@ -1,10 +1,15 @@
 import "./App.css";
+import Searchbar from "./components/Searchbar";
+import TaskManager from "./components/TaskManager";
 
 function App() {
   return (
-    <>
-      <div>Hello bois</div>
-    </>
+    <div className="App">
+      <div className="card">
+        <Searchbar />
+        <TaskManager />
+      </div>
+    </div>
   );
 }
 
