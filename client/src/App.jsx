@@ -21,11 +21,80 @@ function App() {
     getTasks();
   }, []);
 
+  const handleAddTask = async (taskname, desc) => {
+    try {
+      const res = await fetch(URL + "/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskname, desc }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to add task");
+      }
+
+      const data = await res.json();
+
+      setTasks(data);
+      setFilteredTasks(data);
+    } catch (error) {
+      console.error("Error adding task:", error.message);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(URL + `/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete task");
+      }
+
+      const data = await res.json();
+      setTasks(data);
+      setFilteredTasks(data);
+    } catch (error) {
+      console.error("Error deleting task:", error.message);
+    }
+  };
+
+  const handleUpdate = async (id) => {
+    try {
+      const task = tasks.find((val) => val.id === id);
+
+      const res = await fetch(URL + `/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isDone: task.isDone === 0 ? 1 : 0 }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to update task");
+      }
+
+      const data = await res.json();
+      setTasks(data);
+      setFilteredTasks(data);
+    } catch (error) {
+      console.error("Error updating task:", error.message);
+    }
+  };
+
   return (
     <div className="App">
       <div className="card">
-        <Searchbar />
-        <TaskManager filteredTasks={filteredTasks} />
+        <Searchbar handleAddTask={handleAddTask} />
+        <TaskManager
+          filteredTasks={filteredTasks}
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate}
+        />
       </div>
     </div>
   );

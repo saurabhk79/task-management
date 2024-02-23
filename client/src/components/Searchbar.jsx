@@ -3,9 +3,10 @@ import { useState } from "react";
 // eslint-disable-next-line react/prop-types
 const Searchbar = ({ handleAddTask, handleSetFilter }) => {
   const [task, setTask] = useState("");
+  const [desc, setDesc] = useState("");
 
   const handleSubmit = () => {
-    if (task.length !== 0) handleAddTask(task);
+    if (task.length !== 0 && desc.length !== 0) handleAddTask(task, desc);
   };
 
   return (
@@ -17,6 +18,13 @@ const Searchbar = ({ handleAddTask, handleSetFilter }) => {
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
+
+        <textarea
+          cols="30"
+          rows="10"
+          onChange={(e) => setDesc(e.target.value)}
+          value={desc}
+        ></textarea>
         <button type="submit">Add</button>
       </form>
 
