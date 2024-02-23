@@ -5,8 +5,13 @@ const Searchbar = ({ handleAddTask, handleSetFilter }) => {
   const [task, setTask] = useState("");
   const [desc, setDesc] = useState("");
 
-  const handleSubmit = () => {
-    if (task.length !== 0 && desc.length !== 0) handleAddTask(task, desc);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (task.length !== 0 && desc.length !== 0) {
+      handleAddTask(task, desc);
+      setDesc("");
+      setTask("");
+    }
   };
 
   return (
@@ -14,7 +19,7 @@ const Searchbar = ({ handleAddTask, handleSetFilter }) => {
       <form className="add-task" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Add a todo..."
+          placeholder="Add a task..."
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />

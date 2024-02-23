@@ -87,19 +87,16 @@ function App() {
   };
 
   const handleSetFilter = (val) => {
+    const newTasks = [...tasks];
     switch (val) {
       case "all":
-        setFilteredTasks(tasks);
+        setFilteredTasks(newTasks);
         break;
       case "done":
-        setFilteredTasks((filteredTasks) =>
-          filteredTasks.filter((task) => task.isDone === 1)
-        );
+        setFilteredTasks(newTasks.filter((val) => val.isDone === 1));
         break;
       case "pending":
-        setFilteredTasks((filteredTasks) =>
-          filteredTasks.filter((task) => task.isDone === 0)
-        );
+        setFilteredTasks(newTasks.filter((val) => val.isDone === 0));
         break;
       default:
         setFilteredTasks(tasks);
@@ -109,6 +106,7 @@ function App() {
   return (
     <div className="App">
       <div className="card">
+        <h1>Task manager</h1>
         <Searchbar
           handleAddTask={handleAddTask}
           handleSetFilter={handleSetFilter}

@@ -1,0 +1,66 @@
+.card {
+  width: 480px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  overflow: auto;
+}
+
+.card > h1 {
+    margin-bottom: 12px;
+    color: blueviolet;
+}
+
+.add-task {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-task > * {
+  padding: 8px;
+}
+
+.add-task > button {
+  background-color: blueviolet;
+  color: white;
+  cursor: pointer;
+}
+
+.filter {
+  margin: 12px 0;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+
+.task {
+    background-color: rgb(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    max-height: 150px;
+}
+
+.task > p {
+    margin: 12px 0;
+}
+
+.btn-grp {
+    margin-top: 12px;
+}
+
+.btn-grp > * {
+    margin-right: 8px;
+}
+.undone {
+    background-color: rgb(255, 255, 0, 0.5);
+}
+
+.done {
+    background-color: rgb(0, 128, 0, 0.5);
+}
+
+.delete {
+    background-color: rgb(255, 0, 0, 0.5);
+}
