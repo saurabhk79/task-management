@@ -11,6 +11,7 @@ db.serialize(() => {
             CREATE TABLE IF NOT EXISTS tasks (
                 id INTEGER PRIMARY KEY,
                 taskname TEXT,
+                desc TEXT,
                 isDone INTEGER
             )
       `);
@@ -25,7 +26,7 @@ db.serialize(() => {
 
     if (row.count === 0) {
       db.run(
-        `INSERT INTO tasks (taskname, isDone) VALUES ("Hand the letter to postman.", 0)`
+        `INSERT INTO tasks (taskname, desc , isDone) VALUES ("Do this first","Hand the letter to postman.", 0)`
       );
     } else console.log("Already contains data. Skipping adding data.");
   });
