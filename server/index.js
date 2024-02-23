@@ -17,6 +17,63 @@ app.get("/", (req, res) => {
   });
 });
 
+app.post('/tasks', (req, res) => {
+    const { taskname } = req.body;
+
+    if (!taskname) {
+        return res.status(400).json({ error: "Taskname is required" });
+    }
+
+    db.run(`INSERT INTO tasks (taskname, isDone) VALUES (?, ?)`, [taskname, 0], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.all("SELECT * FROM tasks", (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        });
+    });
+});
+
+// DELETE endpoint to delete a task
+app.delete('/tasks/:id', (req, res) => {
+    const taskId = req.params.id;
+
+    db.run(`DELETE FROM tasks WHERE id = ?`, taskId, function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.all("SELECT * FROM tasks", (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        });
+    });
+});
+
+app.patch('/tasks/:id', (req, res) => {
+    const taskId = req.params.id;
+    const { isDone } = req.body;
+
+    db.run(`UPDATE tasks SET isDone = ? WHERE id = ?`, [isDone, taskId], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.all("SELECT * FROM tasks", (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.json(rows);
+        });
+    });
+});
+
 app.listen(PORT, () => {
   console.log("Running on http://localhost:" + PORT);
 });
