@@ -8,8 +8,8 @@
 }
 
 .card > h1 {
-    margin-bottom: 12px;
-    color: blueviolet;
+  margin-bottom: 12px;
+  color: blueviolet;
 }
 
 .add-task {
@@ -36,31 +36,37 @@
 }
 
 .task {
-    background-color: rgb(0, 0, 0, 0.2);
-    border-radius: 20px;
-    padding: 20px;
-    max-height: 150px;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  max-height: 150px;
+  box-shadow: 2px 0 8px 2px rgb(0, 0, 0, 0.2);
 }
 
 .task > p {
-    margin: 12px 0;
+  margin: 12px 0;
 }
 
 .btn-grp {
-    margin-top: 12px;
+  margin-top: 12px;
 }
 
 .btn-grp > * {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 .undone {
-    background-color: rgb(255, 255, 0, 0.5);
+  background-color: rgb(255, 255, 0, 0.5);
 }
 
 .done {
-    background-color: rgb(0, 128, 0, 0.5);
+  background-color: rgb(0, 128, 0, 0.5);
 }
 
 .delete {
-    background-color: rgb(255, 0, 0, 0.5);
+  background-color: rgb(255, 0, 0, 0.5);
+}
+
+.tasks-section > h1 {
+  color: blueviolet;
+  margin-bottom: 12px;
 }
