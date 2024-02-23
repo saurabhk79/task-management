@@ -17,61 +17,64 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post('/tasks', (req, res) => {
-    const { taskname } = req.body;
+app.post("/tasks", (req, res) => {
+  const { taskname, desc } = req.body;
 
-    if (!taskname) {
-        return res.status(400).json({ error: "Taskname is required" });
+  db.run(
+    `INSERT INTO tasks (taskname,desc, isDone) VALUES (?,?, ?)`,
+    [taskname, desc, 0],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      db.all("SELECT * FROM tasks", (err, rows) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+      });
+    }
+  );
+});
+
+app.delete("/tasks/:id", (req, res) => {
+  const taskId = req.params.id;
+
+  db.run(`DELETE FROM tasks WHERE id = ?`, taskId, function (err) {
+    if (err) {
+      return res.status(500).json({ error: err.message });
     }
 
-    db.run(`INSERT INTO tasks (taskname, isDone) VALUES (?, ?)`, [taskname, 0], function(err) {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        db.all("SELECT * FROM tasks", (err, rows) => {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            res.json(rows);
-        });
+    db.all("SELECT * FROM tasks", (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.json(rows);
     });
+  });
 });
 
-// DELETE endpoint to delete a task
-app.delete('/tasks/:id', (req, res) => {
-    const taskId = req.params.id;
+app.patch("/tasks/:id", (req, res) => {
+  const taskId = req.params.id;
+  const { isDone } = req.body;
 
-    db.run(`DELETE FROM tasks WHERE id = ?`, taskId, function(err) {
+  db.run(
+    `UPDATE tasks SET isDone = ? WHERE id = ?`,
+    [isDone, taskId],
+    function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+
+      db.all("SELECT * FROM tasks", (err, rows) => {
         if (err) {
-            return res.status(500).json({ error: err.message });
+          return res.status(500).json({ error: err.message });
         }
-
-        db.all("SELECT * FROM tasks", (err, rows) => {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            res.json(rows);
-        });
-    });
-});
-
-app.patch('/tasks/:id', (req, res) => {
-    const taskId = req.params.id;
-    const { isDone } = req.body;
-
-    db.run(`UPDATE tasks SET isDone = ? WHERE id = ?`, [isDone, taskId], function(err) {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-
-        db.all("SELECT * FROM tasks", (err, rows) => {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            res.json(rows);
-        });
-    });
+        res.json(rows);
+      });
+    }
+  );
 });
 
 app.listen(PORT, () => {
