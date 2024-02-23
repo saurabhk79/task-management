@@ -4,7 +4,7 @@ import Searchbar from "./components/Searchbar";
 import TaskManager from "./components/TaskManager";
 
 function App() {
-  const URL = "http://localhost:9872";
+  const URL = "https://task-management-5zmk.onrender.com";
 
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
